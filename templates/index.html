@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Bible Verse</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            text-align: center;
+            padding: 50px;
+        }
+
+        #verse-box {
+            background-color: white;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #verse {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        #reference {
+            font-style: italic;
+            color: #666;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a#romans-road-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a#romans-road-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script>
+        async function fetchVerse() {
+            try {
+                const res = await fetch('/random?' + new Date().getTime());
+                const data = await res.json();
+                document.getElementById("verse").innerText = `"${data.text}"`;
+                document.getElementById("reference").innerText = data.reference;
+            } catch (error) {
+                document.getElementById("verse").innerText = "Could not load verse.";
+                document.getElementById("reference").innerText = "";
+            }
+        }
+
+        window.onload = fetchVerse;
+    </script>
+</head>
+<body>
+    <h1>📖 Random Bible Verse Generator</h1>
+
+    <div id="verse-box">
+        <p id="verse">Loading verse...</p>
+        <p id="reference"></p>
+        <button onclick="fetchVerse()">Get New Verse</button>
+        <br>
+        <a id="romans-road-link" href="/romans-road">🛤️ The Romans Road: Path to Salvation</a>
+    </div>
+</body>
+</html>
